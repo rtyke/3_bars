@@ -3,13 +3,13 @@ import json
 import sys
 
 
-def load_data(filepath):
+def load_data(file_path):
     try:
-        with open(filepath, 'r') as file_object:
+        with open(file_path, 'r') as file_object:
             data = file_object.read()
             return data
     except FileNotFoundError:
-        print(f'Вы ввели неверный путь к файлу: {filepath}')
+        print(f'Вы ввели неверный путь к файлу: {file_path}')
         return None
 
 
@@ -46,20 +46,20 @@ def get_smallest_bar(data):
 
 def get_closest_bar(data, latitude, longitude):
 
-    def calculate_distance(data):
-        bar_long, bar_lat = data['geometry']['coordinates']
+    def calculate_distance(data_dict):
+        bar_long, bar_lat = data_dict['geometry']['coordinates']
         return ((bar_long - longitude)**2 + (bar_lat - latitude)**2)*0.5
 
     closest_bar_dict = min(data, key=calculate_distance)
     return get_bar_name(closest_bar_dict), get_bar_address(closest_bar_dict)
 
 
-def get_json_path():
+def get_path():
     try:
-        json_path = sys.argv[1]
+        path = sys.argv[1]
     except IndexError:
-        json_path = input('Введите полный путь к файлу с json данным:\n')
-    return json_path
+        path = input('Введите полный путь к файлу с json данным:\n')
+    return path
 
 
 def get_user_location():
@@ -81,7 +81,7 @@ def get_user_location():
 
 
 if __name__ == '__main__':
-    json_path = get_json_path()
+    json_path = get_path()
     bars_attr = load_data(json_path)
     if not bars_attr:
         sys.exit('Скрипт не может работать без данных')
