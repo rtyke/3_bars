@@ -26,9 +26,6 @@ def get_seats_count(data):
     return data['properties']['Attributes']['SeatsCount']
 
 
-def test():
-    print(100)
-
 def get_bar_name(data):
     return data['properties']['Attributes']['Name']
 
