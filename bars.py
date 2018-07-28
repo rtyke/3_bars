@@ -86,20 +86,20 @@ def get_user_location():
 
 if __name__ == '__main__':
     json_path = get_json_path()
-    bars_data = load_data(json_path)
-    if not bars_data:
+    bars_attr = load_data(json_path)
+    if not bars_attr:
         sys.exit('Скрипт не может рабоать без данных')
-    bars_json = convert_to_json(bars_data)
+    bars_json = convert_to_json(bars_attr)
     if not bars_json:
         sys.exit('Данные должны быть в формате json')
-    bars_data = bars_json['features']
+    bars_attr = bars_json['features']
 
-    biggest_bar = get_biggest_bar(bars_data)
+    biggest_bar = get_biggest_bar(bars_attr)
     print(f'Самый большой бар: {biggest_bar[0]}, мест:  {biggest_bar[1]}')
-    smallest_bar = get_smallest_bar(bars_data)
+    smallest_bar = get_smallest_bar(bars_attr)
     print(f'Самый маленький бар: {smallest_bar[0]}, мест: {smallest_bar[1]}')
     user_longitude, user_latitude = get_user_location()
-    closest_bar = get_closest_bar(bars_data, user_longitude, user_latitude)
+    closest_bar = get_closest_bar(bars_attr, user_longitude, user_latitude)
     print(f'Самый близкий бар: {closest_bar[0]}, aдрес: {closest_bar[1]} ')
 
 
