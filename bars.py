@@ -62,30 +62,22 @@ def get_json_path():
     return json_path
 
 
-def is_geo_coordinates(user_input):
-    if len(user_input) == 9 and user_input[2] == '.':
-        try:
-            float(user_input)
-        except ValueError:
-            return False
-        else:
-            return True
-
-
 def get_user_location():
     while True:
         longitude = input('Введите долготу места, рядом с которой ищем бар:\n')
-        if not is_geo_coordinates(longitude):
-            print('Долгота введена неверно, попробуйте еще раз\n')
-        else:
+        try:
+            longitude = float(longitude)
             break
+        except ValueError:
+            print('Долгота введена неверно, попробуйте еще раз\n')
     while True:
         latitude = input('Введите широту места, рядом с которой ищем бар:\n')
-        if not is_geo_coordinates(latitude):
-            print('Широта введена неверно, попробуйте еще раз\n')
-        else:
+        try:
+            latitude = float(latitude)
             break
-    return float(longitude), float(latitude)
+        except ValueError:
+            print('Широта введена неверно, попробуйте еще раз\n')
+    return longitude, latitude
 
 
 if __name__ == '__main__':
@@ -105,7 +97,3 @@ if __name__ == '__main__':
     user_longitude, user_latitude = get_user_location()
     closest_bar = get_closest_bar(bars_attr, user_longitude, user_latitude)
     print(f'Самый близкий бар: {closest_bar[0]}, адрес: {closest_bar[1]} ')
-
-
-
-
