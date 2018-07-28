@@ -2,8 +2,6 @@
 import json
 import sys
 
-import math
-
 
 def load_data(filepath):
     try:
