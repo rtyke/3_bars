@@ -61,22 +61,24 @@ def get_path():
     return path
 
 
-def get_user_location():
-    while True:
-        longitude = input('Введите широту места, рядом с которой ищем бар:\n')
-        try:
-            longitude = float(longitude)
-            break
-        except ValueError:
-            print('Широта введена неверно, попробуйте еще раз\n')
-    while True:
-        latitude = input('Введите долготу места, рядом с которой ищем бар:\n')
-        try:
-            latitude = float(latitude)
-            break
-        except ValueError:
-            print('Долгота введена неверно, попробуйте еще раз\n')
-    return longitude, latitude
+def get_users_longitude():
+    longitude = input('Введите долготу места, рядом с которой ищем бар:\n')
+    try:
+        longitude = float(longitude)
+        return longitude
+    except ValueError:
+        print('Долгота введена неверно, попробуйте еще раз\n')
+        return get_users_longitude()
+
+
+def get_users_latitude():
+    latitude = input('Введите широту места, рядом с которой ищем бар:\n')
+    try:
+        latitude = float(latitude)
+        return latitude
+    except ValueError:
+        print('Широта введена неверно, попробуйте еще раз\n')
+        return get_users_latitude()
 
 
 if __name__ == '__main__':
@@ -95,7 +97,8 @@ if __name__ == '__main__':
     smallest_bar = get_smallest_bar(bars_attr)
     print('Самый маленький бар: {}, мест: {}'.format(
         smallest_bar[0], smallest_bar[1]))
-    user_longitude, user_latitude = get_user_location()
+    user_longitude = get_users_longitude()
+    user_latitude = get_users_latitude()
     closest_bar = get_closest_bar(bars_attr, user_longitude, user_latitude)
     print('Самый близкий бар: {}, адрес: {}'.format(
         closest_bar[0], closest_bar[1]))
