@@ -30,22 +30,18 @@ def get_bar_name(data):
     return data['properties']['Attributes']['Name']
 
 
-def get_bar_seats(data):
-    return data['properties']['Attributes']['SeatsCount']
-
-
 def get_bar_address(data):
     return data['properties']['Attributes']['Address']
 
 
 def get_biggest_bar(data):
     biggest_bar_dict = max(data, key=get_seats_count)
-    return get_bar_name(biggest_bar_dict), get_bar_seats(biggest_bar_dict)
+    return get_bar_name(biggest_bar_dict), get_seats_count(biggest_bar_dict)
 
 
 def get_smallest_bar(data):
     smallest_bar_dict = min(data, key=get_seats_count)
-    return get_bar_name(smallest_bar_dict), get_bar_seats(smallest_bar_dict)
+    return get_bar_name(smallest_bar_dict), get_seats_count(smallest_bar_dict)
 
 
 def get_closest_bar(data, longitude, latitude):
