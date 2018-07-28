@@ -9,7 +9,7 @@ def load_data(file_path):
             data = file_object.read()
             return data
     except FileNotFoundError:
-        print(f'Вы ввели неверный путь к файлу: {file_path}')
+        print('Вы ввели неверный путь к файлу: {}'.format(file_path))
         return None
 
 
@@ -91,9 +91,12 @@ if __name__ == '__main__':
     bars_attr = bars_json['features']
 
     biggest_bar = get_biggest_bar(bars_attr)
-    print(f'Самый большой бар: {biggest_bar[0]}, мест:  {biggest_bar[1]}')
+    print('Самый большой бар: {}, мест:  {}'.format(
+        biggest_bar[0], biggest_bar[1]))
     smallest_bar = get_smallest_bar(bars_attr)
-    print(f'Самый маленький бар: {smallest_bar[0]}, мест: {smallest_bar[1]}')
+    print('Самый маленький бар: {}, мест: {}'.format(
+        smallest_bar[0], smallest_bar[1]))
     user_longitude, user_latitude = get_user_location()
     closest_bar = get_closest_bar(bars_attr, user_longitude, user_latitude)
-    print(f'Самый близкий бар: {closest_bar[0]}, адрес: {closest_bar[1]} ')
+    print('Самый близкий бар: {}, адрес: {}'.format(
+        closest_bar[0], closest_bar[1]))
