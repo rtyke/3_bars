@@ -26,6 +26,9 @@ def get_seats_count(data):
     return data['properties']['Attributes']['SeatsCount']
 
 
+def test():
+    print(100)
+
 def get_bar_name(data):
     return data['properties']['Attributes']['Name']
 
@@ -44,7 +47,7 @@ def get_smallest_bar(data):
     return get_bar_name(smallest_bar_dict), get_seats_count(smallest_bar_dict)
 
 
-def get_closest_bar(data, longitude, latitude):
+def get_closest_bar(data, latitude, longitude):
 
     def calculate_distance(data):
         bar_long, bar_lat = data['geometry']['coordinates']
@@ -64,19 +67,19 @@ def get_json_path():
 
 def get_user_location():
     while True:
-        longitude = input('Введите долготу места, рядом с которой ищем бар:\n')
+        longitude = input('Введите широту места, рядом с которой ищем бар:\n')
         try:
             longitude = float(longitude)
             break
         except ValueError:
-            print('Долгота введена неверно, попробуйте еще раз\n')
+            print('Широта введена неверно, попробуйте еще раз\n')
     while True:
-        latitude = input('Введите широту места, рядом с которой ищем бар:\n')
+        latitude = input('Введите долготу места, рядом с которой ищем бар:\n')
         try:
             latitude = float(latitude)
             break
         except ValueError:
-            print('Широта введена неверно, попробуйте еще раз\n')
+            print('Долгота введена неверно, попробуйте еще раз\n')
     return longitude, latitude
 
 
