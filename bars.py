@@ -9,7 +9,7 @@ def load_data(filepath):
             data = file_object.read()
             return data
     except FileNotFoundError:
-        print(f'в данном пути {filepath} нет файла')
+        print(f'Вы ввели неверный путь к файлу: {filepath}')
         return None
 
 
