@@ -5,8 +5,8 @@ import sys
 def load_data(file_path):
     try:
         with open(file_path, 'r') as file_object:
-            data = file_object.read()
-            return data
+            bars_data = file_object.read()
+            return bars_data
     except FileNotFoundError:
         print('Вы ввели неверный путь к файлу: {}'.format(file_path))
         return None
