@@ -22,35 +22,35 @@ def convert_to_json(string_data):
         return None
 
 
-def get_seats_count(data):
-    return data['properties']['Attributes']['SeatsCount']
+def get_seats_count(bar_dict):
+    return bar_dict['properties']['Attributes']['SeatsCount']
 
 
-def get_bar_name(data):
-    return data['properties']['Attributes']['Name']
+def get_bar_name(bar_dict):
+    return bar_dict['properties']['Attributes']['Name']
 
 
-def get_bar_address(data):
-    return data['properties']['Attributes']['Address']
+def get_bar_address(bar_dict):
+    return bar_dict['properties']['Attributes']['Address']
 
 
-def get_biggest_bar(data):
-    biggest_bar_dict = max(data, key=get_seats_count)
+def get_biggest_bar(bar_dict):
+    biggest_bar_dict = max(bar_dict, key=get_seats_count)
     return get_bar_name(biggest_bar_dict), get_seats_count(biggest_bar_dict)
 
 
-def get_smallest_bar(data):
-    smallest_bar_dict = min(data, key=get_seats_count)
+def get_smallest_bar(bar_dict):
+    smallest_bar_dict = min(bar_dict, key=get_seats_count)
     return get_bar_name(smallest_bar_dict), get_seats_count(smallest_bar_dict)
 
 
-def get_closest_bar(data, latitude, longitude):
+def get_closest_bar(bar_dict, latitude, longitude):
 
     def calculate_distance(data_dict):
         bar_long, bar_lat = data_dict['geometry']['coordinates']
         return ((bar_long - longitude)**2 + (bar_lat - latitude)**2)*0.5
 
-    closest_bar_dict = min(data, key=calculate_distance)
+    closest_bar_dict = min(bar_dict, key=calculate_distance)
     return get_bar_name(closest_bar_dict), get_bar_address(closest_bar_dict)
 
 
