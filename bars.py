@@ -22,32 +22,40 @@ def convert_to_json(string_data):
         return None
 
 
+def get_seats_count(data):
+    return data['properties']['Attributes']['SeatsCount']
+
+
+def get_bar_name(data):
+    return data['properties']['Attributes']['Name']
+
+
+def get_bar_seats(data):
+    return data['properties']['Attributes']['SeatsCount']
+
+
+def get_bar_address(data):
+    return data['properties']['Attributes']['Address']
+
+
 def get_biggest_bar(data):
-    biggest_bar = max(
-        data,
-        key=lambda x: x['properties']['Attributes']['SeatsCount'])
-    biggest_bar_name = biggest_bar['properties']['Attributes']['Name']
-    biggest_bar_seats = biggest_bar['properties']['Attributes']['SeatsCount']
-    return biggest_bar_name, biggest_bar_seats
+    biggest_bar_dict = max(data, key=get_seats_count)
+    return get_bar_name(biggest_bar_dict), get_bar_seats(biggest_bar_dict)
 
 
 def get_smallest_bar(data):
-    smallest_bar = min(
-        data,
-        key=lambda x: x['properties']['Attributes']['SeatsCount'])
-    smallest_bar_name = smallest_bar['properties']['Attributes']['Name']
-    smallest_bar_seats = smallest_bar['properties']['Attributes']['SeatsCount']
-    return smallest_bar_name, smallest_bar_seats
+    smallest_bar_dict = min(data, key=get_seats_count)
+    return get_bar_name(smallest_bar_dict), get_bar_seats(smallest_bar_dict)
 
 
 def get_closest_bar(data, longitude, latitude):
-    # TODO map or lambda?
-    func = lambda x: ((x['geometry']['coordinates'][0] - longitude) ** 2 +
-                      (x['geometry']['coordinates'][1] - latitude) ** 2)**1/2
-    closest_bar = min(data, key=func)
-    closest_bar_name = closest_bar['properties']['Attributes']['Name']
-    closest_bar_address = closest_bar['properties']['Attributes']['Address']
-    return closest_bar_name, closest_bar_address
+
+    def calculate_distance(data):
+        bar_long, bar_lat = data['geometry']['coordinates']
+        return ((bar_long - longitude)**2 + (bar_lat - latitude)**2)*0.5
+
+    closest_bar_dict = min(data, key=calculate_distance)
+    return get_bar_name(closest_bar_dict), get_bar_address(closest_bar_dict)
 
 
 def get_json_path():
@@ -59,7 +67,7 @@ def get_json_path():
 
 
 def is_geo_coordinates(user_input):
-    if len(user_input) == 9 and user_input[2] == '.' :
+    if len(user_input) == 9 and user_input[2] == '.':
         try:
             float(user_input)
         except ValueError:
