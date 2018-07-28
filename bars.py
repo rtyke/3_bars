@@ -18,7 +18,7 @@ def convert_to_json(string_data):
         json_data = json.loads(string_data)
         return json_data
     except json.decoder.JSONDecodeError:
-        print('В файле данные не формате json')
+        print('Данные в файле не в формате json')
         return None
 
 
@@ -70,13 +70,13 @@ def is_geo_coordinates(user_input):
 
 def get_user_location():
     while True:
-        longitude = input('Введите долготу места, рядом с котором ищем бар:\n')
+        longitude = input('Введите долготу места, рядом с которой ищем бар:\n')
         if not is_geo_coordinates(longitude):
             print('Долгота введена неверно, попробуйте еще раз\n')
         else:
             break
     while True:
-        latitude = input('Введите широту места, рядом с которым ищем бар:\n')
+        latitude = input('Введите широту места, рядом с которой ищем бар:\n')
         if not is_geo_coordinates(latitude):
             print('Широта введена неверно, попробуйте еще раз\n')
         else:
@@ -88,7 +88,7 @@ if __name__ == '__main__':
     json_path = get_json_path()
     bars_attr = load_data(json_path)
     if not bars_attr:
-        sys.exit('Скрипт не может рабоать без данных')
+        sys.exit('Скрипт не может работать без данных')
     bars_json = convert_to_json(bars_attr)
     if not bars_json:
         sys.exit('Данные должны быть в формате json')
@@ -100,7 +100,7 @@ if __name__ == '__main__':
     print(f'Самый маленький бар: {smallest_bar[0]}, мест: {smallest_bar[1]}')
     user_longitude, user_latitude = get_user_location()
     closest_bar = get_closest_bar(bars_attr, user_longitude, user_latitude)
-    print(f'Самый близкий бар: {closest_bar[0]}, aдрес: {closest_bar[1]} ')
+    print(f'Самый близкий бар: {closest_bar[0]}, адрес: {closest_bar[1]} ')
 
 
 
