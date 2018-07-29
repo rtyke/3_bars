@@ -80,10 +80,10 @@ def get_users_latitude():
 
 
 if __name__ == '__main__':
-    json_path = get_path()
-    bars_attr = load_data(json_path)
+    file_path = get_path()
+    bars_attr = load_data(file_path)
     if not bars_attr:
-        sys.exit('Вы ввели неверный путь к файлу'.format(json_path))
+        sys.exit('Вы ввели неверный путь к файлу'.format(file_path))
     bars_json = convert_to_json(bars_attr)
     if not bars_json:
         sys.exit('Данные в файле не в формате json')
