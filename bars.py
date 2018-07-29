@@ -2,7 +2,7 @@ import json
 import sys
 
 
-def load_data(file_path):
+def read_data(file_path):
     try:
         with open(file_path, 'r') as file_object:
             bars_data = file_object.read()
@@ -11,7 +11,7 @@ def load_data(file_path):
         return None
 
 
-def convert_to_json(string_data):
+def load_data(string_data):
     try:
         json_data = json.loads(string_data)
         return json_data
@@ -71,10 +71,10 @@ if __name__ == '__main__':
     if not file_path:
         sys.exit('При запуске скрипта надо указать путь к файлу с данными в '
                  'формате json')
-    bars_attr = load_data(file_path)
+    bars_attr = read_data(file_path)
     if not bars_attr:
         sys.exit('Вы ввели неверный путь к файлу'.format(file_path))
-    bars_json = convert_to_json(bars_attr)
+    bars_json = load_data(bars_attr)
     if not bars_json:
         sys.exit('Данные в файле не в формате json')
     bars_attr = bars_json['features']
