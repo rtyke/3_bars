@@ -94,8 +94,8 @@ if __name__ == '__main__':
     closest_bar = get_closest_bar(bars_attr, users_longitude, users_latitude)
     # output
     print_bar(smallest_bar, 'Самый маленький бар: {}, мест: {}',
-               'Name', 'SeatsCount')
+              'Name', 'SeatsCount')
     print_bar(biggest_bar, 'Самый большой бар: {}, мест: {}',
-               'Name', 'SeatsCount')
+              'Name', 'SeatsCount')
     print_bar(closest_bar, 'Самый близкий бар: {}, адрес: {}',
-               'Name', 'Address')
+              'Name', 'Address')
