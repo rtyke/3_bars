@@ -8,7 +8,6 @@ def load_data(file_path):
             bars_data = file_object.read()
             return bars_data
     except FileNotFoundError:
-        print('Вы ввели неверный путь к файлу: {}'.format(file_path))
         return None
 
 
@@ -17,7 +16,6 @@ def convert_to_json(string_data):
         json_data = json.loads(string_data)
         return json_data
     except json.decoder.JSONDecodeError:
-        print('Данные в файле не в формате json')
         return None
 
 
@@ -85,10 +83,10 @@ if __name__ == '__main__':
     json_path = get_path()
     bars_attr = load_data(json_path)
     if not bars_attr:
-        sys.exit('Скрипт не может работать без данных')
+        sys.exit('Вы ввели неверный путь к файлу'.format(json_path))
     bars_json = convert_to_json(bars_attr)
     if not bars_json:
-        sys.exit('Данные должны быть в формате json')
+        sys.exit('Данные в файле не в формате json')
     bars_attr = bars_json['features']
 
     biggest_bar = get_biggest_bar(bars_attr)
