@@ -19,26 +19,24 @@ def convert_to_json(string_data):
         return None
 
 
+def print_bar(bar_dict, output, *features_names):
+    feature_values = [bar_dict['properties']['Attributes'][x] for x
+                      in features_names]
+    print(output.format(*feature_values))
+
+
 def get_seats_count(bar_dict):
     return bar_dict['properties']['Attributes']['SeatsCount']
 
 
-def get_bar_name(bar_dict):
-    return bar_dict['properties']['Attributes']['Name']
-
-
-def get_bar_address(bar_dict):
-    return bar_dict['properties']['Attributes']['Address']
-
-
 def get_biggest_bar(bars_list):
     biggest_bar_dict = max(bars_list, key=get_seats_count)
-    return get_bar_name(biggest_bar_dict), get_seats_count(biggest_bar_dict)
+    return biggest_bar_dict
 
 
 def get_smallest_bar(bar_dict):
     smallest_bar_dict = min(bar_dict, key=get_seats_count)
-    return get_bar_name(smallest_bar_dict), get_seats_count(smallest_bar_dict)
+    return smallest_bar_dict
 
 
 def get_closest_bar(bar_dict, latitude, longitude):
@@ -48,7 +46,7 @@ def get_closest_bar(bar_dict, latitude, longitude):
         return ((bar_long - longitude)**2 + (bar_lat - latitude)**2)*0.5
 
     closest_bar_dict = min(bar_dict, key=calculate_distance)
-    return get_bar_name(closest_bar_dict), get_bar_address(closest_bar_dict)
+    return closest_bar_dict
 
 
 def get_path():
@@ -59,23 +57,6 @@ def get_path():
     return path
 
 
-# def get_users_longitude():
-#     longitude = input('Введите долготу места, рядом с которой ищем бар:\n')
-#     try:
-#         longitude = float(longitude)
-#         return longitude
-#     except ValueError:
-#         return get_users_longitude()
-#
-#
-# def get_users_latitude():
-#     latitude = input('Введите широту места, рядом с которой ищем бар:\n')
-#     try:
-#         latitude = float(latitude)
-#         return latitude
-#     except ValueError:
-#         print('Широта введена неверно, попробуйте еще раз\n')
-#         return get_users_latitude()
 def get_users_cooridante(request):
     coordinate = input(request)
     try:
@@ -83,6 +64,7 @@ def get_users_cooridante(request):
         return coordinate
     except ValueError:
         return None
+
 
 if __name__ == '__main__':
     file_path = get_path()
@@ -97,16 +79,23 @@ if __name__ == '__main__':
         sys.exit('Данные в файле не в формате json')
     bars_attr = bars_json['features']
 
-    biggest_bar = get_biggest_bar(bars_attr)
-    print('Самый большой бар: {}, мест:  {}'.format(
-        biggest_bar[0], biggest_bar[1]))
-    smallest_bar = get_smallest_bar(bars_attr)
-    print('Самый маленький бар: {}, мест: {}'.format(
-        smallest_bar[0], smallest_bar[1]))
-    users_longitude = get_users_cooridante('Введите широту места, рядом с '
+    users_longitude = get_users_cooridante('Введите долготу места, рядом с '
                                            'которой ищем бар:\n')
-    users_latitude = get_users_cooridante('Введите долготу места, рядом с '
+    if not users_longitude:
+        sys.exit('Долгота введена неверно')
+    users_latitude = get_users_cooridante('Введите широту места, рядом с '
                                           'которой ищем бар:\n')
+    if not users_latitude:
+        sys.exit('Широта введена неверно')
+
+    # define bars
+    smallest_bar = get_smallest_bar(bars_attr)
+    biggest_bar = get_biggest_bar(bars_attr)
     closest_bar = get_closest_bar(bars_attr, users_longitude, users_latitude)
-    print('Самый близкий бар: {}, адрес: {}'.format(
-        closest_bar[0], closest_bar[1]))
+    # output
+    print_bar(smallest_bar, 'Самый маленький бар: {}, мест: {}',
+               'Name', 'SeatsCount')
+    print_bar(biggest_bar, 'Самый большой бар: {}, мест: {}',
+               'Name', 'SeatsCount')
+    print_bar(closest_bar, 'Самый близкий бар: {}, адрес: {}',
+               'Name', 'Address')
