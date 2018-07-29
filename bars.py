@@ -79,19 +79,19 @@ if __name__ == '__main__':
         sys.exit('Данные в файле не в формате json')
     bars_attr = bars_json['features']
 
+    # get users coordinate
     users_longitude = get_users_cooridante('Введите долготу места, рядом с '
                                            'которой ищем бар:\n')
-    if not users_longitude:
-        sys.exit('Долгота введена неверно')
     users_latitude = get_users_cooridante('Введите широту места, рядом с '
                                           'которой ищем бар:\n')
-    if not users_latitude:
-        sys.exit('Широта введена неверно')
+    if not users_longitude or not users_latitude:
+        sys.exit('Координаты введены неверно')
 
     # define bars
     smallest_bar = get_smallest_bar(bars_attr)
     biggest_bar = get_biggest_bar(bars_attr)
     closest_bar = get_closest_bar(bars_attr, users_longitude, users_latitude)
+
     # output
     print_bar(smallest_bar, 'Самый маленький бар: {}, мест: {}',
               'Name', 'SeatsCount')
